@@ -85,7 +85,7 @@
             "inline": [
                 "rm {{user `metadata_file`}}",
                 "rm -rf {{user `helper_script_folder`}}",
-                "chmod 444 {{user `image_folder`}}"
+                "chmod 755 {{user `image_folder`}}"
             ],
             "execute_command": "sudo sh -c '{{ .Vars }} {{ .Path }}'"
         },
