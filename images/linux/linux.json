@@ -1,0 +1,100 @@
+{
+    "variables": {
+        "commit_id": "{{env `COMMIT_ID`}}",
+        "client_id": "{{env `ARM_CLIENT_ID`}}",
+        "client_secret": "{{env `ARM_CLIENT_SECRET`}}",
+        "subscription_id": "{{env `ARM_SUBSCRIPTION_ID`}}",
+        "tenant_id": "{{env `ARM_TENANT_ID`}}",
+        "resource_group": "{{env `ARM_RESOURCE_GROUP`}}",
+        "storage_account": "{{env `ARM_STORAGE_ACCOUNT`}}",
+        "location": "{{env `ARM_RESOURCE_LOCATION`}}",
+        "image_folder": "/image",
+        "commit_file": "/image/commit.txt",
+        "metadata_file": "/image/metadata.txt",
+        "helper_script_folder": "/image/helpers",
+        "vm_size": "Standard_DS2_v2"
+    },
+    "builders": [
+        {
+            "type": "azure-arm",
+            "client_id": "{{user `client_id`}}",
+            "client_secret": "{{user `client_secret`}}",
+            "subscription_id": "{{user `subscription_id`}}",
+            "tenant_id": "{{user `tenant_id`}}",
+
+            "location": "{{user `location`}}",
+            "vm_size": "{{user `vm_size`}}",
+            "resource_group_name": "{{user `resource_group`}}",
+            "storage_account": "{{user `storage_account`}}",
+            "capture_container_name": "images",
+            "capture_name_prefix": "packer",
+            "os_type": "Linux",
+            "image_publisher": "Canonical",
+            "image_offer": "UbuntuServer",
+            "image_sku": "16.04-LTS"
+        }
+    ],
+    "provisioners": [
+        {
+            "type": "shell",
+            "inline": [
+                "mkdir {{user `image_folder`}}",
+                "chmod 777 {{user `image_folder`}}",
+                "echo {{user `commit_id`}} > {{user `commit_file`}}",
+                "chmod +r {{user `commit_file`}}",
+                "cat {{user `commit_file`}}"
+            ],
+            "execute_command": "sudo sh -c '{{ .Vars }} {{ .Path }}'"
+        },
+        {
+            "type": "shell",
+            "inline": [
+                "apt-get update",
+                "apt-get dist-upgrade"
+            ],
+            "execute_command": "sudo sh -c '{{ .Vars }} {{ .Path }}'"
+        },
+        {
+            "type": "file",
+            "source": "./scripts/helpers",
+            "destination": "{{user `helper_script_folder`}}"
+        },
+        {
+            "type": "shell",
+            "scripts":[
+                "./scripts/base/preparemetadata.sh"
+            ],
+            "execute_command": "sudo sh -c '{{ .Vars }} METADATA_FILE={{user `metadata_file`}} HELPER_SCRIPTS={{user `helper_script_folder`}} {{ .Path }}'"
+        },
+        {
+            "type": "shell",
+            "scripts":[
+                "./scripts/installers/dotnetcore.sh",
+                "./scripts/installers/docker.sh"
+            ],
+            "execute_command": "sudo sh -c '{{ .Vars }} METADATA_FILE={{user `metadata_file`}} HELPER_SCRIPTS={{user `helper_script_folder`}} {{ .Path }}'"
+        },
+        {
+            "type": "file",
+            "source": "{{user `metadata_file`}}",
+            "destination": "./metadata.txt",
+            "direction": "download"
+        },
+        {
+            "type": "shell",
+            "inline": [
+                "rm {{user `metadata_file`}}",
+                "rm -rf {{user `helper_script_folder`}}",
+                "chmod 444 {{user `image_folder`}}"
+            ],
+            "execute_command": "sudo sh -c '{{ .Vars }} {{ .Path }}'"
+        },
+        {
+            "type": "shell",
+            "inline": [
+                "/usr/sbin/waagent -force -deprovision+user && export HISTSIZE=0 && sync"
+            ],
+            "execute_command": "sudo sh -c '{{ .Vars }} {{ .Path }}'"
+        }
+    ]
+}
