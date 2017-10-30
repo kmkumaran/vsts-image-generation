@@ -1,0 +1,1 @@
+Common scripts for all Windows images regardless of Visual Stuio or OS version
