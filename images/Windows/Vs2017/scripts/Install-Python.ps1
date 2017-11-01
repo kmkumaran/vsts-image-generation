@@ -10,9 +10,9 @@ if($pythonDir -is [array])
 $currentPath = (Get-ItemProperty -Path 'Registry::HKEY_LOCAL_MACHINE\System\CurrentControlSet\Control\Session Manager\Environment' -Name PATH).Path
 
 if ($currentPath | Select-String -SimpleMatch $pythonDir.FullName)
-{ 
+{
     Write-Host $pythonDir.FullName ' is already in path'
-    #exit 0 
+    #exit 0
 }
 
 $newPath = $pythonDir.FullName + ';' + $currentPath

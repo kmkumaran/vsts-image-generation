@@ -1,0 +1,1 @@
+choco install dotnet4.7.1 -y --force --no-progress

@@ -21,11 +21,10 @@ Function InstallVS
     $process = Start-Process -FilePath cmd.exe -ArgumentList $Arguments -Wait -PassThru 
     $exitCode = $process.ExitCode
         
-    $exitCode = $process.ExitCode
     if ($exitCode -eq 0 -or $exitCode -eq 3010)
     {
       Write-Host -Object 'Installation successful'
-      return 0
+      return $exitCode
     }
     else
     {

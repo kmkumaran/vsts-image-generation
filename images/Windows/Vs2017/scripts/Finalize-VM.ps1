@@ -1,8 +1,8 @@
 Write-Host "Run antivirus"
-Push-Location "C:\Program Files\Windows Defender"
+#Push-Location "C:\Program Files\Windows Defender"
 # Full Scan
-.\MpCmdRun.exe -Scan -ScanType 2
-Pop-Location
+#.\MpCmdRun.exe -Scan -ScanType 2
+#Pop-Location
 
 Write-Host "Cleanup WinSxS"
 Dism.exe /online /Cleanup-Image /StartComponentCleanup /ResetBase
@@ -27,5 +27,5 @@ Write-Host "Clean up various directories"
 }
 
 Write-Host "Setting local execution policy"
-Set-ExecutionPolicy -ExecutionPolicy Unrestricted -Scope LocalMachine -ErrorAction Continue | Out-Null
+Set-ExecutionPolicy -ExecutionPolicy Unrestricted -Scope MachinePolicy  -ErrorAction Continue | Out-Null
 Get-ExecutionPolicy -List

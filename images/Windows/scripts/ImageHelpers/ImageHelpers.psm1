@@ -1,0 +1,10 @@
+[CmdletBinding()]
+param()
+
+. $PSScriptRoot\PathHelpers.ps1
+
+Export-ModuleMember -Function @(
+    'Test-MachinePath'
+    'Get-MachinePath'
+    'Update-MachinePath'
+)

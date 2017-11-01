@@ -3,8 +3,6 @@ choco install jdk9 -y
 choco install ant -y
 choco install maven -y
 
-refreshenv
-
 $currentPath = (Get-ItemProperty -Path 'Registry::HKEY_LOCAL_MACHINE\System\CurrentControlSet\Control\Session Manager\Environment' -Name PATH).Path
 
 $pathSegments = $currentPath.Split(';')
