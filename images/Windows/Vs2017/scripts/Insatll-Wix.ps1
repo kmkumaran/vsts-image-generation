@@ -1,1 +1,0 @@
-choco install wixtoolset --version 3.11.0

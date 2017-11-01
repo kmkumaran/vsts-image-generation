@@ -1,1 +1,1 @@
-# choco install netfx-4.7.1-devpack -y
+choco install netfx-4.7.1-devpack --version 4.7 -y --force 

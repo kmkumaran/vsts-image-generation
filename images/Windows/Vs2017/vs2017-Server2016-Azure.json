@@ -8,6 +8,7 @@
         "resource_group": "{{env `ARM_RESOURCE_GROUP`}}",
         "storage_account": "{{env `ARM_STORAGE_ACCOUNT`}}",
         "location": "{{env `ARM_RESOURCE_LOCATION`}}",
+        "ssh_password": "{{env `SSH_PASSWORD`}}",
         "vm_size": "Standard_DS4_v2"
     },
     "builders": [
@@ -83,6 +84,20 @@
             ],
             "scripts":[
                 "./scripts/Install-VS2017.ps1"
+            ]
+        },
+        {
+            "type": "windows-restart",
+            "restart_timeout": "10m"
+        },
+        {
+            "type": "powershell",
+            "valid_exit_codes": [
+                0,
+                3010    
+            ],
+            "scripts":[
+                "./scripts/Install-NET471.ps1"
             ]
         },
         {
