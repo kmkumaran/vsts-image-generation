@@ -12,6 +12,8 @@ function DockerPull {
     $results
 }
   
+exit 0
+
 DockerPull microsoft/windowsservercore
 DockerPull microsoft/nanoserver
 DockerPull microsoft/aspnetcore-build:1.0-2.0

@@ -1,17 +1,3 @@
-function RunProcess
-{
-  Param
-  (
-    [String]$Program,
-    [String]$Args
-  )
-  $Arguments = ('/c', $Program, $Args)
-  
-  Write-Host "Starting $Program ..."
-  $process = Start-Process -FilePath cmd.exe -ArgumentList $Arguments -Wait -PassThru 
-  $exitCode = $process.ExitCode
-  return $exitCode
-}
 Function InstallVS
 {
   Param
@@ -148,8 +134,6 @@ $VSBootstrapperURL = 'https://aka.ms/vs/15/release/vs_enterprise.exe'
 
 $ErrorActionPreference = 'Stop'
 
-exit 0
-
 # Install VS
 $exitCode = InstallVS -WorkLoads $WorkLoads -Sku $Sku -VSBootstrapperURL $VSBootstrapperURL
 
@@ -167,9 +151,5 @@ if($instanceFolders -is [array])
 $catalogContent = Get-Content -Path ($instanceFolders.FullName + '\catalog.json')
 $catalog = $catalogContent | ConvertFrom-Json 
 Write-Host "Visual Studio version" $catalog.info.id "installed"
-
-Write-Host "Running VSIX Updates"
-RunProcess -Program "C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\Common7\IDE\VSIXAutoUpdate.exe"
-
 
 exit $exitCode
