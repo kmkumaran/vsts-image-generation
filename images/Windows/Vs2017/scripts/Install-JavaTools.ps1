@@ -3,7 +3,9 @@ choco install jdk9 -y
 choco install ant -y
 choco install maven -y
 
-$currentPath = (Get-ItemProperty -Path 'Registry::HKEY_LOCAL_MACHINE\System\CurrentControlSet\Control\Session Manager\Environment' -Name PATH).Path
+Import-Module -Name ImageHelpers -Force
+
+$currentPath = Get-MachinePath
 
 $pathSegments = $currentPath.Split(';')
 $newPathSegments = @()
@@ -22,10 +24,9 @@ $latestJava8Install = $javaInstalls.FullName;
 $newPath = [string]::Join(';', $newPathSegments)
 $newPath = $latestJava8Install + '\bin;' + $newPath
 
-Set-ItemProperty -Path 'Registry::HKEY_LOCAL_MACHINE\System\CurrentControlSet\Control\Session Manager\Environment' -Name Path -Value $newPath
-$env:Path = $newPath
+$env:Path = Set-MachinePath -NewPath $newPath
 
-Set-ItemProperty -Path 'Registry::HKEY_LOCAL_MACHINE\System\CurrentControlSet\Control\Session Manager\Environment' -Name JAVA_HOME -Value $latestJava8Install
+setx JAVA_HOME $latestJava8Install /M
 $env:JAVA_HOME = $latestJava8Install
 
 #Move maven variables to Machine

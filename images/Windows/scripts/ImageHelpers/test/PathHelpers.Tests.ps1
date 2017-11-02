@@ -10,10 +10,18 @@ Describe 'Test-MachinePath Tests' {
     }
 }
 
-Describe 'Update-MachinePath Tests' {
+Describe 'Set-MachinePath Tests' {
     Mock Get-MachinePath {return "C:\foo;C:\bar"}
     Mock Set-ItemProperty {return}
-    It 'Add item to path should be at beginning' {
-        Update-MachinePath -PathItem "C:\baz" | Should Be "C:\baz;C:\foo;C:\bar"
+    It 'Set-MachinePath should return new path' {
+        Set-MachinePath -NewPath "C:\baz" | Should Be "C:\baz"
+    }
+}
+
+Describe "Add-MachinePathItem Tests"{
+    Mock Get-MachinePath {return "C:\foo;C:\bar"}
+    Mock Set-ItemProperty {return}
+    It 'Add-MachinePathItem should return complete path' {
+        Add-MachinePathItem -PathItem 'C:\baz' | Should Be 'C:\baz;C:\foo;C:\bar'
     }
 }

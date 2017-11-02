@@ -6,5 +6,6 @@ param()
 Export-ModuleMember -Function @(
     'Test-MachinePath'
     'Get-MachinePath'
-    'Update-MachinePath'
+    'Set-MachinePath'
+    'Add-MachinePathItem'
 )

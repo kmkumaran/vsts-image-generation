@@ -3,12 +3,12 @@ function Disable-InternetExplorerESC {
     $UserKey = "HKLM:\SOFTWARE\Microsoft\Active Setup\Installed Components\{A509B1A8-37EF-4b3f-8CFC-4F3A74704073}"
     Set-ItemProperty -Path $AdminKey -Name "IsInstalled" -Value 0 -Force
     Set-ItemProperty -Path $UserKey -Name "IsInstalled" -Value 0 -Force
-    Stop-Process -Name Explorer -Force
+    Stop-Process -Name Explorer -Force -ErrorAction Continue
     Write-Host "IE Enhanced Security Configuration (ESC) has been disabled."
 }
 function Disable-UserAccessControl {
     Set-ItemProperty "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System" -Name "ConsentPromptBehaviorAdmin" -Value 00000000 -Force
-    Write-Host "User Access Control (UAC) has been disabled." 
+    Write-Host "User Access Control (UAC) has been disabled."
 }
 
 function Remove-LocalAdminUser
@@ -17,7 +17,7 @@ function Remove-LocalAdminUser
     param(
         [string] $UserName
 	)
-	
+
     if ([ADSI]::Exists('WinNT://./' + $UserName))
     {
         $computer = [ADSI]"WinNT://$env:ComputerName"
@@ -56,6 +56,9 @@ function Add-LocalAdminUser {
     return $user
 }
 
+
+Import-Module -Name ImageHelpers -Force
+
 Write-Host "Setup PowerShellGet"
 # Set-PSRepository -InstallationPolicy Trusted -Name PSGallery
 Install-PackageProvider -Name NuGet -MinimumVersion 2.8.5.201 -Force
@@ -83,6 +86,6 @@ Install-WindowsFeature -Name DSC-Service
 
 Disable-UserAccessControl
 Disable-InternetExplorerESC
-	
+
 Add-LocalAdminUser -UserName "SoftwareInstaller" -Password "P@ssw0rd1"
 

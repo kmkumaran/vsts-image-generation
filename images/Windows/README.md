@@ -12,14 +12,14 @@ Packer should be in your path and you will need to gather your service principal
 ```
 cd images\Windows\Vs2017
 
-packer.exe build^ 
+packer.exe build^
     -var "client_id=<spn.applicationId>"^
-    -var "client_secret=<spn_password>"^ 
-    -var "subscription_id=<spn.subscriptionId>"^ 
-    -var "tenant_id=<spn.tenantId>"^ 
-    -var "object_id=<spn.Id>"^ 
+    -var "client_secret=<spn_password>"^
+    -var "subscription_id=<spn.subscriptionId>"^
+    -var "tenant_id=<spn.tenantId>"^
+    -var "object_id=<spn.Id>"^
     -var "location=<rg_location>"^
-    -var "resource_group=<capture_rg>"^ 
+    -var "resource_group=<capture_rg>"^
     -var "storage_account=<capture_storage_account>"^
     vs2017-Server2016-Azure.json
 ```
@@ -36,5 +36,16 @@ You can shortcut the command line by creating a JSON file that has all of your v
     "location": "<rg location>"
 }
 
-packer build -var-file=<path to variables file> vs2017-Server2016-Azure.json
+packer build -var-file=<path to variables file> -var 'commit_id=(git log --pretty=format:'%H' -n 1)' vs2017-Server2016-Azure.json
 ```
+
+
+                        "publisher": "MicrosoftWindowsServer",
+                        "offer": "WindowsServerSemiAnnual",
+                        "sku": "Datacenter-Core-1709-smalldisk",
+                        "version": "latest"
+
+                        "publisher": "MicrosoftWindowsServer",
+                        "offer": "WindowsServerSemiAnnual",
+                        "sku": "Datacenter-Core-1709-with-Containers-smalldisk",
+                        "version": "latest"

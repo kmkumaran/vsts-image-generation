@@ -1,3 +1,5 @@
+Import-Module -Name ImageHelpers -Force
+
 $pythonDir = Get-Item -Path 'C:\Program Files\Python3*'
 
 if($pythonDir -is [array])
@@ -7,7 +9,7 @@ if($pythonDir -is [array])
     exit 1
 }
 
-$currentPath = (Get-ItemProperty -Path 'Registry::HKEY_LOCAL_MACHINE\System\CurrentControlSet\Control\Session Manager\Environment' -Name PATH).Path
+$currentPath = Get-MachinePath
 
 if ($currentPath | Select-String -SimpleMatch $pythonDir.FullName)
 {
@@ -15,10 +17,7 @@ if ($currentPath | Select-String -SimpleMatch $pythonDir.FullName)
     #exit 0
 }
 
-$newPath = $pythonDir.FullName + ';' + $currentPath
-
-Set-ItemProperty -Path 'Registry::HKEY_LOCAL_MACHINE\System\CurrentControlSet\Control\Session Manager\Environment' -Name Path -Value $newPath
-$env:Path = $newPath
+$env:Path = Add-MachinePathItem -PathItem $pythonDir.FullName
 
 Write-Host "Python $(python --version) on path"
 exit 0

@@ -9,7 +9,13 @@
         "storage_account": "{{env `ARM_STORAGE_ACCOUNT`}}",
         "location": "{{env `ARM_RESOURCE_LOCATION`}}",
         "ssh_password": "{{env `SSH_PASSWORD`}}",
-        "vm_size": "Standard_DS4_v2"
+        "vm_size": "Standard_DS4_v2",
+
+        "image_folder": "C:\\image",
+        "commit_file": "C:\\image\\commit.txt",
+        "metadata_file": "C:\\image\\metadata.txt",
+        "helper_script_folder": "C:\\Program Files\\WindowsPowerShell\\Modules\\",
+        "commit_id": "LATEST"
     },
     "builders": [
         {
@@ -40,23 +46,23 @@
         {
             "name": "managed-disk",
             "type": "azure-arm",
-        
+
             "client_id": "{{user `client_id`}}",
             "client_secret": "{{user `client_secret`}}",
             "subscription_id": "{{user `subscription_id`}}",
             "object_id": "{{user `object_id`}}",
             "tenant_id": "{{user `tenant_id`}}",
-        
+
             "managed_image_resource_group_name": "{{user `resource_group`}}",
             "managed_image_name": "vs2017-win2016-{{ timestamp }}",
             "location": "{{user `location`}}",
             "vm_size": "{{user `vm_size`}}",
-        
+
             "os_type": "Windows",
             "image_publisher": "MicrosoftWindowsServer",
             "image_offer": "WindowsServer",
             "image_sku": "2016-Datacenter",
-        
+
             "communicator": "winrm",
             "winrm_use_ssl": "true",
             "winrm_insecure": "true",
@@ -65,6 +71,19 @@
           }
     ],
     "provisioners": [
+        {
+            "type": "powershell",
+            "inline":[
+                "New-Item -Path {{user `image_folder`}} -ItemType Directory -Force",
+                "Write-Output {{user `commit_id`}} > {{user `commit_file`}}",
+                "Write-Host (Get-Content -Path {{user `commit_file`}})"
+            ]
+        },
+        {
+            "type": "file",
+            "source": "../scripts/ImageHelpers",
+            "destination": "{{user `helper_script_folder`}}"
+        },
         {
             "type": "powershell",
             "scripts":[
@@ -111,7 +130,7 @@
             "type": "powershell",
             "valid_exit_codes": [
                 0,
-                3010    
+                3010
             ],
             "scripts":[
                 "./scripts/Install-VS2017.ps1"
@@ -125,7 +144,7 @@
             "type": "powershell",
             "valid_exit_codes": [
                 0,
-                3010    
+                3010
             ],
             "scripts":[
                 "./scripts/Install-NET471.ps1"
@@ -135,7 +154,7 @@
             "type": "powershell",
             "valid_exit_codes": [
                 0,
-                3010    
+                3010
             ],
             "scripts":[
                 "./scripts/Install-NET471DevPack.ps1"
@@ -149,6 +168,12 @@
             "type": "powershell",
             "scripts":[
                 "./scripts/Install-AzureModules.ps1"
+            ]
+        },
+        {
+            "type": "powershell",
+            "scripts":[
+                "./scripts/Install-AzureCli.ps1"
             ]
         },
         {

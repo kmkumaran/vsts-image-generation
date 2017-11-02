@@ -1,1 +1,1 @@
-choco install wixtoolset --version 3.11.0 -y --force
+choco install wixtoolset --version 3.11.0.20170506 -y --force

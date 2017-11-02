@@ -18,7 +18,17 @@ function Test-MachinePath{
     }
 }
 
-function Update-MachinePath{
+function Set-MachinePath{
+    [CmdletBinding()]
+    param(
+        [string]$NewPath
+    )
+    Set-ItemProperty -Path 'Registry::HKEY_LOCAL_MACHINE\System\CurrentControlSet\Control\Session Manager\Environment' -Name Path -Value $NewPath
+    return $NewPath
+}
+
+function Add-MachinePathItem
+{
     [CmdletBinding()]
     param(
         [string]$PathItem
@@ -26,8 +36,7 @@ function Update-MachinePath{
 
     $currentPath = Get-MachinePath
     $newPath = $PathItem + ';' + $currentPath
-    Set-ItemProperty -Path 'Registry::HKEY_LOCAL_MACHINE\System\CurrentControlSet\Control\Session Manager\Environment' -Name Path -Value $newPath
-    return $newPath
+    return Set-MachinePath -NewPath $newPath
 }
 
 function Get-MachinePath{
