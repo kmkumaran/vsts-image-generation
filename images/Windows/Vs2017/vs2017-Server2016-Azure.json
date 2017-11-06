@@ -225,6 +225,12 @@
         {
             "type": "powershell",
             "scripts":[
+                "./scripts/Run-Antivirus.ps1"
+            ]
+        },
+        {
+            "type": "powershell",
+            "scripts":[
                 "./scripts/Finalize-VM.ps1"
             ]
         },
