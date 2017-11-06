@@ -38,14 +38,3 @@ You can shortcut the command line by creating a JSON file that has all of your v
 
 packer build -var-file=<path to variables file> -var 'commit_id=(git log --pretty=format:'%H' -n 1)' vs2017-Server2016-Azure.json
 ```
-
-
-                        "publisher": "MicrosoftWindowsServer",
-                        "offer": "WindowsServerSemiAnnual",
-                        "sku": "Datacenter-Core-1709-smalldisk",
-                        "version": "latest"
-
-                        "publisher": "MicrosoftWindowsServer",
-                        "offer": "WindowsServerSemiAnnual",
-                        "sku": "Datacenter-Core-1709-with-Containers-smalldisk",
-                        "version": "latest"
