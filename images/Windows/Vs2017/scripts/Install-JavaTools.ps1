@@ -29,7 +29,7 @@ $env:Path = Set-MachinePath -NewPath $newPath
 setx JAVA_HOME $latestJava8Install /M
 $env:JAVA_HOME = $latestJava8Install
 
-#Move maven variables to Machine
+#Move maven variables to Machine, they may not be in the environment for this script so we need to read them from the registry.
 $userSid = (Get-WmiObject win32_useraccount -Filter "name = '$env:USERNAME' AND domain = '$env:USERDOMAIN'").SID
 $userEnvironmentKey = 'Registry::HKEY_USERS\' + $userSid + '\Environment'
 
