@@ -10,6 +10,9 @@ New-Item -Path C:\npm\cache -Force -ItemType Directory
 setx NPM_CONFIG_PREFIX=C:\npm\prefix /M
 setx NPM_CONFIG_CACHE=C:\npm\cache /M
 
+$env:NPM_CONFIG_PREFIX=C:\npm\prefix
+$env:NPM_CONFIG_CACHE=C:\npm\cache
+
 $env:Path = Get-MachinePath
 
 Write-Host "Node $(node --version) on path"

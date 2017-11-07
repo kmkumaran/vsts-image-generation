@@ -1,7 +1,8 @@
-# Get the latest command line tools
+# Get the latest command line tools so we can accept all of the licenses.  Alternatively we could just upload them.
 # https://developer.android.com/studio/index.html
 Invoke-WebRequest -UseBasicParsing -Uri "https://dl.google.com/android/repository/sdk-tools-windows-3859397.zip" -OutFile android-sdk-tools.zip
 
+# Don't replace the one that VS installs as it seems to break things.
 Expand-Archive -Path android-sdk-tools.zip -DestinationPath android-sdk -Force
 
 $sdk = Get-Item -Path .\android-sdk
@@ -25,9 +26,16 @@ while (!$response.Contains("All SDK package licenses accepted"))
 
 Stop-AwaitSession
 
+Copy-Item -Path $(Join-Path -Path $sdk.FullName -ChildPath 'licenses') -Destination 'C:\Program Files (x86)\Android\android-sdk\' -Force -Recurse
+
+
+# run the updates.
+# keep newer versions in descending order
+
+$sdk_root = "C:\Program Files (x86)\Android\android-sdk"
 Push-Location -Path $sdk.FullName
 
-& '.\tools\bin\sdkmanager.bat' `
+& '.\tools\bin\sdkmanager.bat' --sdk_root=$sdk_root `
     "platforms;android-26" `
     "platforms;android-25" `
     "platforms;android-24" `
