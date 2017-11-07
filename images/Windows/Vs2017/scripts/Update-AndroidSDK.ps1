@@ -1,19 +1,17 @@
-#Get the latest command line tools
+# Get the latest command line tools
 # https://developer.android.com/studio/index.html
 Invoke-WebRequest -UseBasicParsing -Uri "https://dl.google.com/android/repository/sdk-tools-windows-3859397.zip" -OutFile android-sdk-tools.zip
 
-Expand-Archive -Path android-sdk-tools.zip -DestinationPath android-sdk
+Expand-Archive -Path android-sdk-tools.zip -DestinationPath android-sdk -Force
 
-Copy-Item -Path android-sdk -Destination 'C:\Program Files (x86)\Android' -Force
-
-
+$sdk = Get-Item -Path .\android-sdk
 # Accept the standard licenses.  There does not appear to be an easy way to do this
 # so we are using a module that will let use send commands to another process
 Install-Module -Name Await -Force
 Import-Module Await -Force
 
 Start-AwaitSession
-Send-AwaitCommand -Command { Set-Location 'C:\Program Files (x86)\Android\android-sdk' }
+Send-AwaitCommand -Text $("Set-Location -Path " + $sdk.FullName)
 Send-AwaitCommand -Command { .\tools\bin\sdkmanager.bat --licenses }
 Start-Sleep -Seconds 5
 $response = Receive-AwaitResponse
@@ -23,12 +21,13 @@ while (!$response.Contains("All SDK package licenses accepted"))
     Send-AwaitCommand -Text 'y'
     Start-Sleep -Seconds 2
     $response = Receive-AwaitResponse
-
 }
 
 Stop-AwaitSession
 
-& 'C:\Program Files (x86)\Android\android-sdk\tools\bin\sdkmanager.bat' `
+Push-Location -Path $sdk.FullName
+
+& '.\tools\bin\sdkmanager.bat' `
     "platforms;android-26" `
     "platforms;android-25" `
     "platforms;android-24" `
@@ -56,3 +55,5 @@ Stop-AwaitSession
     "add-ons;addon-google_apis-google-23" `
     "add-ons;addon-google_apis-google-22" `
     "add-ons;addon-google_apis-google-21"
+
+Pop-Location
