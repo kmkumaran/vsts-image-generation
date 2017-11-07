@@ -1,3 +1,10 @@
+###############################################################################
+#
+#   Install Git for Windows
+#   owner: CI Platform
+#
+###############################################################################
+
 Import-Module -Name ImageHelpers
 
 choco install git --version 2.15.0 -y --package-parameters= "/GitOnlyOnPath /WindowsTerminal /NoShellIntegration"

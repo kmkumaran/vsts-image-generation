@@ -1,3 +1,11 @@
+###############################################################################
+#
+#   Pull some standard docker images
+#   must be run after docker is installed
+#   owner: CI Build
+#
+###############################################################################
+
 function DockerPull {
     Param ([string]$image)
 

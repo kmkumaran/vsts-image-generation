@@ -1,7 +1,14 @@
+###############################################################################
+#
+#   Install Visual Studio 2017
+#   owner: CI Build
+#
+###############################################################################
+
 Function InstallVS
 {
   Param
-  (     
+  (
     [String]$WorkLoads,
     [String]$Sku,
     [String] $VSBootstrapperURL
@@ -18,9 +25,9 @@ Function InstallVS
     $Arguments = ('/c', $FilePath, $WorkLoads, '--quiet', '--norestart', '--wait', '--nocache' )
 
     Write-Host "Starting Install ..."
-    $process = Start-Process -FilePath cmd.exe -ArgumentList $Arguments -Wait -PassThru 
+    $process = Start-Process -FilePath cmd.exe -ArgumentList $Arguments -Wait -PassThru
     $exitCode = $process.ExitCode
-        
+
     if ($exitCode -eq 0 -or $exitCode -eq 3010)
     {
       Write-Host -Object 'Installation successful'
@@ -29,10 +36,10 @@ Function InstallVS
     else
     {
       Write-Host -Object "Non zero exit code returned by the installation process : $exitCode."
-            
+
       # this wont work because of log size limitation in extension manager
       # Get-Content $customLogFilePath | Write-Host
-            
+
       exit $exitCode
     }
   }
@@ -149,7 +156,7 @@ if($instanceFolders -is [array])
 }
 
 $catalogContent = Get-Content -Path ($instanceFolders.FullName + '\catalog.json')
-$catalog = $catalogContent | ConvertFrom-Json 
+$catalog = $catalogContent | ConvertFrom-Json
 Write-Host "Visual Studio version" $catalog.info.id "installed"
 
 exit $exitCode
