@@ -91,12 +91,6 @@
             ]
         },
         {
-            "type": "powershell",
-            "scripts":[
-                "./scripts/Install-Chocolatey.ps1"
-            ]
-        },
-        {
             "type": "windows-restart",
             "restart_timeout": "10m"
         },
@@ -161,6 +155,12 @@
             ]
         },
         {
+            "type": "powershell",
+            "scripts":[
+                "./scripts/Install-Python.ps1"
+            ]
+        },
+        {
             "type": "windows-restart",
             "restart_timeout": "10m"
         },
@@ -197,12 +197,6 @@
         {
             "type": "powershell",
             "scripts":[
-                "./scripts/Install-Python.ps1"
-            ]
-        },
-        {
-            "type": "powershell",
-            "scripts":[
                 "./scripts/Install-JavaTools.ps1"
             ]
         },
@@ -210,6 +204,12 @@
             "type": "powershell",
             "scripts":[
                 "./scripts/Install-Cmake.ps1"
+            ]
+        },
+        {
+            "type": "powershell",
+            "scripts":[
+                "./scripts/Update-AndroidSDK.ps1"
             ]
         },
         {
