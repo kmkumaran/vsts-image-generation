@@ -6,27 +6,13 @@ Invoke-WebRequest -UseBasicParsing -Uri "https://dl.google.com/android/repositor
 Expand-Archive -Path android-sdk-tools.zip -DestinationPath android-sdk -Force
 
 $sdk = Get-Item -Path .\android-sdk
+
 # Accept the standard licenses.  There does not appear to be an easy way to do this
-# so we are using a module that will let use send commands to another process
-Install-Module -Name Await -Force
-Import-Module Await -Force
-
-Start-AwaitSession
-Send-AwaitCommand -Text $("Set-Location -Path " + $sdk.FullName)
-Send-AwaitCommand -Command { .\tools\bin\sdkmanager.bat --licenses }
-Start-Sleep -Seconds 5
-$response = Receive-AwaitResponse
-
-while (!$response.Contains("All SDK package licenses accepted"))
-{
-    Send-AwaitCommand -Text 'y'
-    Start-Sleep -Seconds 2
-    $response = Receive-AwaitResponse
-}
-
-Stop-AwaitSession
-
-Copy-Item -Path $(Join-Path -Path $sdk.FullName -ChildPath 'licenses') -Destination 'C:\Program Files (x86)\Android\android-sdk\' -Force -Recurse
+# so we are base64 encoding a zip of the lincenses directory from another installation
+$base64Content = "UEsDBBQAAAAIAPieZ0uamkPzKgAAACoAAAAhAAAAbGljZW5zZXNcYW5kcm9pZC1nb29nbGV0di1saWNlbnNlBcHRDQAwBAXA/ybdBQ9lHcL+I/Tunu1Un1gBLwZsWUv12s06RbtkEAB9UEsDBBQAAAAIAPmeZ0tHbeedKwAAACoAAAAcAAAAbGljZW5zZXNcYW5kcm9pZC1zZGstbGljZW5zZQXByQ0AIAwDsD8SuxDRi3FaaPYfAXuOp0ZFuPgRRWdxgeWRtMdb2EiTQH9QSwMEFAAAAAgA+p5nS5ECY7AsAAAAKgAAACQAAABsaWNlbnNlc1xhbmRyb2lkLXNkay1wcmV2aWV3LWxpY2Vuc2Xj5TI1MDEzM08zSTZISTVPTDNMNDBLSbVMM0kyNDcyT7IwMTY1TDOyNDQAAFBLAwQUAAAACAD7nmdLk6vQKCwAAAAqAAAAGwAAAGxpY2Vuc2VzXGdvb2dsZS1nZGstbGljZW5zZePlMjZOMks0SjIzMTMwTzM0TDI3tUwzNjJITbNMSUszSUw1TTYxT7E0TwQAUEsDBBQAAAAIAPyeZ0usTeMRLAAAACoAAAAkAAAAbGljZW5zZXNcaW50ZWwtYW5kcm9pZC1leHRyYS1saWNlbnNl4+VKsTQ3TTM3NTSztEg0N08yMzNKMzQyNUlJSUpNTTG2NDBMtTQ3SzNNBABQSwMEFAAAAAgA/Z5nS+2ee/8sAAAAKgAAACYAAABsaWNlbnNlc1xtaXBzLWFuZHJvaWQtc3lzaW1hZ2UtbGljZW5zZePlMjNOMTcwTjM1szRKS7GwNEwxTUxOTE5LSrFINbBMMzFIS7Y0NzM0MAUAUEsBAhQAFAAAAAgA+J5nS5qaQ/MqAAAAKgAAACEAAAAAAAAAAAAAAAAAAAAAAGxpY2Vuc2VzXGFuZHJvaWQtZ29vZ2xldHYtbGljZW5zZVBLAQIUABQAAAAIAPmeZ0tHbeedKwAAACoAAAAcAAAAAAAAAAAAAAAAAGkAAABsaWNlbnNlc1xhbmRyb2lkLXNkay1saWNlbnNlUEsBAhQAFAAAAAgA+p5nS5ECY7AsAAAAKgAAACQAAAAAAAAAAAAAAAAAzgAAAGxpY2Vuc2VzXGFuZHJvaWQtc2RrLXByZXZpZXctbGljZW5zZVBLAQIUABQAAAAIAPueZ0uTq9AoLAAAACoAAAAbAAAAAAAAAAAAAAAAADwBAABsaWNlbnNlc1xnb29nbGUtZ2RrLWxpY2Vuc2VQSwECFAAUAAAACAD8nmdLrE3jESwAAAAqAAAAJAAAAAAAAAAAAAAAAAChAQAAbGljZW5zZXNcaW50ZWwtYW5kcm9pZC1leHRyYS1saWNlbnNlUEsBAhQAFAAAAAgA/Z5nS+2ee/8sAAAAKgAAACYAAAAAAAAAAAAAAAAADwIAAGxpY2Vuc2VzXG1pcHMtYW5kcm9pZC1zeXNpbWFnZS1saWNlbnNlUEsFBgAAAAAGAAYA2gEAAH8CAAAAAA=="
+$content = [System.Convert]::FromBase64String($base64Content)
+Set-Content -Path .\android-sdk-licenses.zip -Value $content -Encoding Byte
+Expand-Archive -Path .\android-sdk-licenses.zip -DestinationPath 'C:\Program Files (x86)\Android\android-sdk' -Force
 
 
 # run the updates.
