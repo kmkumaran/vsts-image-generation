@@ -1,3 +1,13 @@
+###############################################################################
+#
+#   Install Docker
+#   Must be an independent step becuase it requires a restart before we can
+#   continue
+#   owner: CI Platform
+#
+###############################################################################
+
+
 Set-PSRepository -InstallationPolicy Trusted -Name PSGallery
 Write-Host "Install-Module DockerProvider"
 Install-Module DockerProvider -Force

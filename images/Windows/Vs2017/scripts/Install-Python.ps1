@@ -1,3 +1,10 @@
+###############################################################################
+#
+#   Configure python on path based on what VS installs
+#   owner: CIX
+#
+###############################################################################
+
 Import-Module -Name ImageHelpers -Force
 
 $pythonDir = Get-Item -Path 'C:\Program Files\Python3*'

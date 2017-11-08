@@ -1,3 +1,10 @@
+###############################################################################
+#
+#   Install Cmake
+#   owner: CI Build
+#
+###############################################################################
+
 Import-Module -Name ImageHelpers -Force
 
 choco install cmake.install --version 3.9.4 -y --installargs 'ADD_CMAKE_TO_PATH=""System""'

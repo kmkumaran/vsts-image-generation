@@ -1,3 +1,10 @@
+###############################################################################
+#
+#   VM Cleanup
+#   owner: CI Platform
+#
+###############################################################################
+
 Write-Host "Cleanup WinSxS"
 Dism.exe /online /Cleanup-Image /StartComponentCleanup /ResetBase
 
@@ -20,6 +27,3 @@ Write-Host "Clean up various directories"
     }
 }
 
-Write-Host "Setting local execution policy"
-Set-ExecutionPolicy -ExecutionPolicy Unrestricted -Scope MachinePolicy  -ErrorAction Continue | Out-Null
-Get-ExecutionPolicy -List

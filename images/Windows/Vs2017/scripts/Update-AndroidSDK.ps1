@@ -1,3 +1,10 @@
+###############################################################################
+#
+#   Install and update Android SDK and tools
+#   owner: CIX
+#
+###############################################################################
+
 # Get the latest command line tools so we can accept all of the licenses.  Alternatively we could just upload them.
 # https://developer.android.com/studio/index.html
 Invoke-WebRequest -UseBasicParsing -Uri "https://dl.google.com/android/repository/sdk-tools-windows-3859397.zip" -OutFile android-sdk-tools.zip

@@ -1,4 +1,11 @@
-# Install nodejs npm and common node tools
+###############################################################################
+#
+#   Install nodejs-lts and other common node tools
+#   must run after python is configured
+#   owner: CIX
+#
+###############################################################################
+
 
 Import-Module -Name ImageHelpers -Force
 

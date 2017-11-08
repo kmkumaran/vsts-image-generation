@@ -1,3 +1,10 @@
+###############################################################################
+#
+#   VM initialization script, machine level configuration
+#   owner: CI Platform
+#
+###############################################################################
+
 function Disable-InternetExplorerESC {
     $AdminKey = "HKLM:\SOFTWARE\Microsoft\Active Setup\Installed Components\{A509B1A7-37EF-4b3f-8CFC-4F3A74704073}"
     $UserKey = "HKLM:\SOFTWARE\Microsoft\Active Setup\Installed Components\{A509B1A8-37EF-4b3f-8CFC-4F3A74704073}"
@@ -11,58 +18,13 @@ function Disable-UserAccessControl {
     Write-Host "User Access Control (UAC) has been disabled."
 }
 
-function Remove-LocalAdminUser
-{
-    [CmdletBinding()]
-    param(
-        [string] $UserName
-	)
-
-    if ([ADSI]::Exists('WinNT://./' + $UserName))
-    {
-        $computer = [ADSI]"WinNT://$env:ComputerName"
-        $computer.Delete('User', $UserName)
-        try
-        {
-            gwmi win32_userprofile | ? { $_.LocalPath -like "*$UserName*" -and -not $_.Loaded } | % { $_.Delete() | Out-Null }
-        }
-        catch
-        {
-            # Ignore any errors, specially with locked folders/files. It will get cleaned up at a later time..
-        }
-    }
-}
-
-function Add-LocalAdminUser {
-    [CmdletBinding()]
-    param(
-        [string] $UserName,
-        [string] $Password,
-        [string] $Description = 'Software installer user',
-        [switch] $Overwrite = $true
-    )
-
-    if ($Overwrite) {
-        Remove-LocalAdminUser -UserName $UserName
-    }
-
-    $computer = [ADSI]"WinNT://$env:ComputerName"
-    $user = $computer.Create("User", $UserName)
-    $user.SetPassword($Password)
-    $user.Put("Description", $Description)
-    $user.SetInfo()
-    $group = [ADSI]"WinNT://$env:ComputerName/Administrators,group"
-    $group.add("WinNT://$env:ComputerName/$UserName")
-    return $user
-}
-
-
 Import-Module -Name ImageHelpers -Force
 
 Write-Host "Setup PowerShellGet"
 # Set-PSRepository -InstallationPolicy Trusted -Name PSGallery
 Install-PackageProvider -Name NuGet -MinimumVersion 2.8.5.201 -Force
 Install-Module -Name PowerShellGet -Force
+Set-PSRepository -InstallationPolicy Trusted -Name PSGallery
 
 
 Write-Host "Disable Antivirus"
@@ -84,8 +46,41 @@ Install-WindowsFeature -Name NET-Framework-45-Features -IncludeAllSubFeature
 Install-WindowsFeature -Name BITS -IncludeAllSubFeature
 Install-WindowsFeature -Name DSC-Service
 
+Write-Host "Disable UAC"
 Disable-UserAccessControl
+
+Write-Host "Disable IE ESC"
 Disable-InternetExplorerESC
 
-Add-LocalAdminUser -UserName "SoftwareInstaller" -Password "P@ssw0rd1"
+Write-Host "Setting local execution policy"
+Set-ExecutionPolicy -ExecutionPolicy Unrestricted -Scope MachinePolicy  -ErrorAction Continue | Out-Null
+Get-ExecutionPolicy -List
 
+
+Write-Host "Install chocolatey"
+$chocoExePath = 'C:\ProgramData\Chocolatey\bin'
+
+if ($($env:Path).ToLower().Contains($($chocoExePath).ToLower())) {
+    Write-Host "Chocolatey found in PATH, skipping install..."
+    Exit
+}
+
+# Add to system PATH
+$systemPath = [Environment]::GetEnvironmentVariable('Path', [System.EnvironmentVariableTarget]::Machine)
+$systemPath += ';' + $chocoExePath
+[Environment]::SetEnvironmentVariable("PATH", $systemPath, [System.EnvironmentVariableTarget]::Machine)
+
+# Update local process' path
+$userPath = [Environment]::GetEnvironmentVariable('Path', [System.EnvironmentVariableTarget]::User)
+if ($userPath) {
+    $env:Path = $systemPath + ";" + $userPath
+}
+else {
+    $env:Path = $systemPath
+}
+
+# Run the installer
+Invoke-Expression ((new-object net.webclient).DownloadString('https://chocolatey.org/install.ps1'))
+
+# Turn off confirmation
+choco feature enable -n allowGlobalConfirmation

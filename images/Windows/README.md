@@ -36,5 +36,5 @@ You can shortcut the command line by creating a JSON file that has all of your v
     "location": "<rg location>"
 }
 
-packer build -var-file=<path to variables file> -var 'commit_id=(git log --pretty=format:'%H' -n 1)' vs2017-Server2016-Azure.json
+packer build -var-file=<path to variables file> -var "commit_id=$(git log --pretty=format:'%H' -n 1)" vs2017-Server2016-Azure.json
 ```

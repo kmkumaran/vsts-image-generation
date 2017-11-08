@@ -1,4 +1,11 @@
-﻿Set-PSRepository -InstallationPolicy Trusted -Name PSGallery
+﻿###############################################################################
+#
+#   Install Azure PowerShell modules
+#   owner: RM
+#
+###############################################################################
+
+Set-PSRepository -InstallationPolicy Trusted -Name PSGallery
 # First ensure that only Azure PowerShell version 2.1.0 is installed
 
 # We try to detect the whether Azure PowerShell is installed using .msi file. If it is installed, we find it's version, and if the version is anything other than 2.1.0, then it needs to be uninstalled manually (because the uninstallation requires the PowerShell session to be closed)
@@ -14,7 +21,7 @@ elseif($SdkVersion -eq $null)
 {
     Write-Host "No .msi Installation Present"
 }
-else 
+else
 {
     Write-Host "An Azure PowerShell Installation through installer has been detected and it does not have a version 2.1.0. Please close this powershell session and manually uninstall the Azure PowerShell from the Add or Remove Programs in the Control Panel. Then, rerun this script from an Admin PowerShell"
     throw "An Azure PowerShell Installation through installer has been detected and it does not have a version 2.1.0. Please close this powershell session and manually uninstall the Azure PowerShell from the Add or Remove Programs in the Control Panel. Then, rerun this script from an Admin PowerShell"
@@ -37,10 +44,10 @@ foreach($module in $modules)
     {
         if(Test-Path -LiteralPath $module.Path)
         {
-            try 
+            try
             {
-                Uninstall-Module -Name Azure -RequiredVersion $module.Version.tostring() -Force 
-            } 
+                Uninstall-Module -Name Azure -RequiredVersion $module.Version.tostring() -Force
+            }
             catch
             {
                 Write-Host "The Uninstallation of Azure Module version: $($module.Version.tostring()) failed with the error: $($_.Exception.Message) . Please Check if there isn't any other PowerShell session open."
@@ -90,7 +97,7 @@ foreach($module in $modules)
     {
         $isAzureModule_2_1_0_Present = $true
     }
-    else 
+    else
     {
         Write-Host "Another installation of Azure module is detected with version $($module.Version.ToString()) at path: $($module.Path)"
         throw "Azure module(any version except 2.1.0) uninstallation unsuccessful"
@@ -106,7 +113,7 @@ foreach($module in $modules)
     {
         $isAzureRmModule_2_1_0_Present = $true
     }
-    else 
+    else
     {
         Write-Host "Another installation of AzureRM module is detected with version $($module.Version.ToString()) at path: $($module.Path)"
         throw "AzureRM module(any version except 2.1.0) uninstallation unsuccessful"
@@ -150,10 +157,10 @@ else {
         {
             Write-Host "Detected Azure Module 2.1.0 in path: $($module.Path)"
         }
-        else 
+        else
         {
             Write-Host "An Azure Module with version $($module.Version.ToString()) is detected in path: $($module.Path)"
-            throw "An Azure Module with version $($module.Version.ToString()) is detected. Please check whether uninstallation succeeded."    
+            throw "An Azure Module with version $($module.Version.ToString()) is detected. Please check whether uninstallation succeeded."
         }
     }
 
@@ -168,10 +175,10 @@ else {
         {
             Write-Host "Detected AzureRM Module 2.1.0 in path: $($module.Path)"
         }
-        else 
+        else
         {
             Write-Host "An AzureRM Module with version $($module.Version.ToString()) is detected in path: $($module.Path)"
-            throw "An AzureRM Module with version $($module.Version.ToString()) is detected. Please check whether uninstallation succeeded."    
+            throw "An AzureRM Module with version $($module.Version.ToString()) is detected. Please check whether uninstallation succeeded."
         }
     }
 
