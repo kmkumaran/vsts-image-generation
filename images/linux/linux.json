@@ -41,8 +41,7 @@
                 "mkdir {{user `image_folder`}}",
                 "chmod 777 {{user `image_folder`}}",
                 "echo {{user `commit_id`}} > {{user `commit_file`}}",
-                "chmod +r {{user `commit_file`}}",
-                "cat {{user `commit_file`}}"
+                "chmod +r {{user `commit_file`}}"
             ],
             "execute_command": "sudo sh -c '{{ .Vars }} {{ .Path }}'"
         },
@@ -68,7 +67,7 @@
         },
         {
             "type": "shell",
-            "scripts":[
+            "scripts": [
                 "./scripts/installers/dotnetcore.sh",
                 "./scripts/installers/docker.sh"
             ],
