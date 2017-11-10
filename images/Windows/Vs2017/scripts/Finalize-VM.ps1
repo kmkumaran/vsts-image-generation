@@ -8,6 +8,8 @@
 Write-Host "Cleanup WinSxS"
 Dism.exe /online /Cleanup-Image /StartComponentCleanup /ResetBase
 
+$ErrorActionPreference = 'silentlycontinue'
+
 Write-Host "Clean up various directories"
 @(
     "C:\\Recovery",
@@ -27,3 +29,4 @@ Write-Host "Clean up various directories"
     }
 }
 
+$ErrorActionPreference = 'Continue'
