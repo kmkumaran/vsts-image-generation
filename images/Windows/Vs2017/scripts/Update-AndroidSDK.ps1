@@ -26,6 +26,9 @@ Expand-Archive -Path .\android-sdk-licenses.zip -DestinationPath 'C:\Program Fil
 # keep newer versions in descending order
 
 $sdk_root = "C:\Program Files (x86)\Android\android-sdk"
+
+setx ANDROID_HOME $sdk_root /M
+
 Push-Location -Path $sdk.FullName
 
 & '.\tools\bin\sdkmanager.bat' --sdk_root=$sdk_root `
@@ -44,6 +47,7 @@ Push-Location -Path $sdk.FullName
     "build-tools;25.0.3" `
     "build-tools;24.0.3" `
     "build-tools;23.0.3" `
+    "build-tools;23.0.1" `
     "build-tools;22.0.1" `
     "build-tools;21.1.2" `
     "build-tools;19.1.0" `
