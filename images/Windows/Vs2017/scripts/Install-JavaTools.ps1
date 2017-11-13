@@ -8,6 +8,7 @@
 choco install jdk8 -y
 choco install jdk9 -y
 choco install ant -y
+choco install cobertura -y
 choco install maven -y
 choco install gradle --version 4.3.0 -y
 
