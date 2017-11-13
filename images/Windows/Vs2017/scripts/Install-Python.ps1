@@ -25,6 +25,7 @@ if ($currentPath | Select-String -SimpleMatch $pythonDir.FullName)
 }
 
 $env:Path = Add-MachinePathItem -PathItem $pythonDir.FullName
+setx PYTHON_HOME $pythonDir.FullName /M
 
 Write-Host "Python $(python --version) on path"
 exit 0
