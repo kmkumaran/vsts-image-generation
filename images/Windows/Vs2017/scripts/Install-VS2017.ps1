@@ -133,8 +133,7 @@ $WorkLoads = '--allWorkloads --includeRecommended ' + `
                 '--remove Microsoft.VisualStudio.Component.Graphics.Tools ' + `
                 '--remove Microsoft.VisualStudio.Component.Graphics.Win81 ' + `
                 '--remove Microsoft.VisualStudio.Component.IntelliTrace.FrontEnd ' + `
-                '--remove Microsoft.VisualStudio.Component.VC.DiagnosticTools ' + `
-                '--remove Microsoft.VisualStudio.Component.Windows81SDK'
+                '--remove Microsoft.VisualStudio.Component.VC.DiagnosticTools '
 
 $Sku = 'Enterprise'
 $VSBootstrapperURL = 'https://aka.ms/vs/15/release/vs_enterprise.exe'

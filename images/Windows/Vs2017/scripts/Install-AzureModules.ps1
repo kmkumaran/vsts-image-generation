@@ -129,11 +129,6 @@ else {
     Install-Module -Name Azure -RequiredVersion 2.1.0 -AllowClobber -Force
 }
 
-if($SdkVersion -eq "2.1.0")
-{
-    $isAzureRmModule_2_1_0_Present = $true
-}
-
 if($isAzureRmModule_2_1_0_Present -eq $true)
 {
     Write-Host "AzureRM module with version 2.1.0 is already installed"
@@ -235,6 +230,11 @@ $pathToModule = "C:\Modules\azurerm_4.2.1"
 mkdir $pathToModule
 Save-Module -Name AzureRM -RequiredVersion 4.2.1 -Path $pathToModule -Force
 
+
+$CurrentValue = [Environment]::GetEnvironmentVariable("PSModulePath", "Machine")
+[Environment]::SetEnvironmentVariable("PSModulePath", $CurrentValue + ";C:\Modules" , "Machine")
+
+$env:PSModulePath = $env:PSModulePath + ";C:\Modules"
 
 ### Finally we print all available modules one last time
 
