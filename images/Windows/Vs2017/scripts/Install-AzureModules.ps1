@@ -230,10 +230,6 @@ $pathToModule = "C:\Modules\azurerm_4.2.1"
 mkdir $pathToModule
 Save-Module -Name AzureRM -RequiredVersion 4.2.1 -Path $pathToModule -Force
 
-
-$CurrentValue = [Environment]::GetEnvironmentVariable("PSModulePath", "Machine")
-[Environment]::SetEnvironmentVariable("PSModulePath", $CurrentValue + ";C:\Modules" , "Machine")
-
 $env:PSModulePath = $env:PSModulePath + ";C:\Modules"
 
 ### Finally we print all available modules one last time
