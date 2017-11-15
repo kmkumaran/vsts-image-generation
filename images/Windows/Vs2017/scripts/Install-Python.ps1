@@ -1,9 +1,9 @@
-###############################################################################
-#
-#   Configure python on path based on what VS installs
-#   owner: CIX
-#
-###############################################################################
+################################################################################
+##  File:  Install-Python.ps1
+##  Team:  CI-X
+##  Desc:  Configure python on path based on what VS installs
+##         Must run after VS is installed
+################################################################################
 
 Import-Module -Name ImageHelpers -Force
 

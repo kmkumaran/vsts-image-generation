@@ -1,9 +1,8 @@
-###############################################################################
-#
-#   VM Cleanup
-#   owner: CI Platform
-#
-###############################################################################
+################################################################################
+##  File:  Finalize-VM.ps1
+##  Team:  CI-Platform
+##  Desc:  Clean up folders temp folders after installs to save space
+################################################################################
 
 Write-Host "Cleanup WinSxS"
 Dism.exe /online /Cleanup-Image /StartComponentCleanup /ResetBase

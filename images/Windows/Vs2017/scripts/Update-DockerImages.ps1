@@ -1,10 +1,9 @@
-###############################################################################
-#
-#   Pull some standard docker images
-#   must be run after docker is installed
-#   owner: CI Build
-#
-###############################################################################
+################################################################################
+##  File:  Update-DockerImages.ps1
+##  Team:  CI-Build
+##  Desc:  Pull some standard docker images.
+##         Must be run after docker is installed.
+################################################################################
 
 function DockerPull {
     Param ([string]$image)

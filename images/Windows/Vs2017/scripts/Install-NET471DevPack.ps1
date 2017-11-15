@@ -1,9 +1,8 @@
-###############################################################################
-#
-#   Install .NET 4.7.1 targeting pack
-#   owner: CI Build
-#
-###############################################################################
+################################################################################
+##  File:  Install-NET471DevPack.ps1
+##  Team:  CI-Build
+##  Desc:  Install .NET 4.7.1 targeting pack.
+################################################################################
 
 # at the moment this will not install successfully over the WinRM channel and I am unsure why.
 #choco install netfx-4.7.1-devpack -y --force --no-progress

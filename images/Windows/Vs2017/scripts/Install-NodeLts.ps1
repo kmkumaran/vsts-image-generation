@@ -1,11 +1,9 @@
-###############################################################################
-#
-#   Install nodejs-lts and other common node tools
-#   must run after python is configured
-#   owner: CIX
-#
-###############################################################################
-
+################################################################################
+##  File:  Install-NodeLts.ps1
+##  Team:  CI-X
+##  Desc:  Install nodejs-lts and other common node tools.
+##         Must run after python is configured
+################################################################################
 
 Import-Module -Name ImageHelpers -Force
 
