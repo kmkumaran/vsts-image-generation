@@ -1,11 +1,12 @@
 #!/bin/bash
-###############################################################################
-# This is a collection of helper functions to be used in the various install  #
-# scripts relating to apt-get packages                                        #
-###############################################################################
+################################################################################
+##  File:  apt.sh
+##  Team:  CI-Platform
+##  Desc:  This script contains helper functions for using dpkg and apt
+################################################################################
 
 ## Use dpkg to figure out if a package has already been installed
-## Example use: 
+## Example use:
 ## if ! IsInstalled packageName; then
 ##     echo "packageName is not insallted!"
 ## fi
