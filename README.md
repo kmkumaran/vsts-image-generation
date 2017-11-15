@@ -7,7 +7,7 @@
 # General Packer
 [https://www.packer.io/](https://www.packer.io/)
 
-# Build Vs2017 Image
+# Build VS2017 Image
 Packer should be in your path and you will need to gather your service principal and resource group information based on the Azure document above
 ```
 cd images\Windows\Vs2017
