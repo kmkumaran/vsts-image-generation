@@ -1,12 +1,10 @@
-###############################################################################
-#
-#   Install Docker
-#   Must be an independent step becuase it requires a restart before we can
-#   continue
-#   owner: CI Platform
-#
-###############################################################################
-
+################################################################################
+##  File:  Install-Docker.ps1
+##  Team:  CI-Platform
+##  Desc:  Install Docker.
+##         Must be an independent step becuase it requires a restart before we
+##         can continue.
+################################################################################
 
 Set-PSRepository -InstallationPolicy Trusted -Name PSGallery
 Write-Host "Install-Module DockerProvider"

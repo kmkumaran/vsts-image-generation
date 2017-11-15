@@ -1,11 +1,10 @@
-###############################################################################
-#
-#   Install Windows container features.
-#   Must be an independent step becuase it requires a machine restart before
-#   we can continue
-#   owner: CI Platform
-#
-###############################################################################
+################################################################################
+##  File:  Install-ContainersFeature.ps1
+##  Team:  CI-Platform
+##  Desc:  Install Windows container features.
+##         Must be an independent step becuase it requires a machine restart
+##         before we can continue.
+################################################################################
 
 Write-Host "Install Containers feature"
 Install-WindowsFeature -Name Containers

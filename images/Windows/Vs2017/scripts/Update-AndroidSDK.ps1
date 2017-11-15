@@ -1,9 +1,8 @@
-###############################################################################
-#
-#   Install and update Android SDK and tools
-#   owner: CIX
-#
-###############################################################################
+################################################################################
+##  File:  Update-AndroidSDK.ps1
+##  Team:  CI-X
+##  Desc:  Install and update Android SDK and tools
+################################################################################
 
 # Get the latest command line tools so we can accept all of the licenses.  Alternatively we could just upload them.
 # https://developer.android.com/studio/index.html

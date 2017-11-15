@@ -1,5 +1,11 @@
 #!/bin/bash
-## source the helper scripts required
+################################################################################
+##  File:  docker.sh
+##  Team:  CI-Platform
+##  Desc:  Installs the correct version of docker onto the image, and pulls
+##         down the default docker image used for building on ubuntu
+################################################################################
+
 source $HELPER_SCRIPTS/apt.sh
 source $HELPER_SCRIPTS/document.sh
 

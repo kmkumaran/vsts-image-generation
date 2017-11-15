@@ -1,10 +1,9 @@
-###############################################################################
-#
-#   Run a full antivirus scan
-#   Run right after cleanup before we sysprep
-#   owner: CI Platform
-#
-###############################################################################
+################################################################################
+##  File:  Run-Antivirus.ps1
+##  Team:  CI-Platform
+##  Desc:  Run a full antivirus scan.
+##         Run right after cleanup before we sysprep
+################################################################################
 
 Write-Host "Run antivirus"
 Push-Location "C:\Program Files\Windows Defender"

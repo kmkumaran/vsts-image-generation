@@ -1,6 +1,11 @@
-#! /bin/bash
+#!/bin/bash
+################################################################################
+##  File:  preparemetadata.sh
+##  Team:  CI-Platform
+##  Desc:  This script adds a image title information to the metadata
+##         document
+################################################################################
 
-## Script to 
 source $HELPER_SCRIPTS/document.sh
 
 AddTitle "Linux Image (Ubuntu 16.04)"

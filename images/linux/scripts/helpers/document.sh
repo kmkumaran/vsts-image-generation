@@ -1,8 +1,9 @@
 #!/bin/bash
-###############################################################################
-# This is a collection of helper functions to be used in the various install  #
-# scripts to handle updating the metadata document.                           #
-###############################################################################
+################################################################################
+##  File:  document.sh
+##  Team:  CI-Platform
+##  Desc:  Helper functions for writing information to the metadata document
+################################################################################
 
 function WriteItem {
     if [ -z $METADATA_FILE ]; then

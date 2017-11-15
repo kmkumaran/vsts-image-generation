@@ -1,9 +1,8 @@
-﻿###############################################################################
-#
-#   Install Azure PowerShell modules
-#   owner: RM
-#
-###############################################################################
+﻿################################################################################
+##  File:  Install-AzureModules.ps1
+##  Team:  ReleaseManagement
+##  Desc:  Install Azure PowerShell modules
+################################################################################
 
 Set-PSRepository -InstallationPolicy Trusted -Name PSGallery
 # First ensure that only Azure PowerShell version 2.1.0 is installed

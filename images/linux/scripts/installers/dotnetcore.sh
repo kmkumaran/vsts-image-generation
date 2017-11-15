@@ -1,6 +1,13 @@
 #!/bin/bash
+################################################################################
+##  File:  dotnetcore.sh
+##  Team:  CI-Platform
+##  Desc:  Installs .NET Core onto the image for running the provisioner
+################################################################################
+
 source $HELPER_SCRIPTS/apt.sh
 source $HELPER_SCRIPTS/document.sh
+
 DOTNET_PACKAGE=dotnet-dev-1.0.4
 
 echo "Determing if .NET Core ($DOTNET_PACKAGE) is installed"

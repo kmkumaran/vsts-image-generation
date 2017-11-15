@@ -1,9 +1,8 @@
-###############################################################################
-#
-#   VM initialization script, machine level configuration
-#   owner: CI Platform
-#
-###############################################################################
+################################################################################
+##  File:  Initialize-VM.ps1
+##  Team:  CI-Platform
+##  Desc:  VM initialization script, machine level configuration
+################################################################################
 
 function Disable-InternetExplorerESC {
     $AdminKey = "HKLM:\SOFTWARE\Microsoft\Active Setup\Installed Components\{A509B1A7-37EF-4b3f-8CFC-4F3A74704073}"
