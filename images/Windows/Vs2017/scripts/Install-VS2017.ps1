@@ -123,7 +123,6 @@ $WorkLoads = '--allWorkloads --includeRecommended ' + `
                 '--add Microsoft.VisualStudio.Component.TypeScript.2.2 ' + `
                 '--add Microsoft.VisualStudio.Component.VC.Tools.ARM64 ' + `
                 '--add Microsoft.VisualStudio.Component.Windows10SDK.16299.Desktop.arm ' + `
-                '--remove Component.HAXM ' + `
                 '--remove Component.Xamarin.Inspector ' + `
                 '--remove Component.Xamarin.Profiler ' + `
                 '--remove Component.Xamarin.RemotedSimulator ' + `
