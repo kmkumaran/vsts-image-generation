@@ -157,6 +157,12 @@
         {
             "type": "powershell",
             "scripts":[
+                "./scripts/Install-ServiceFabricSDK.ps1"
+            ]
+        },
+        {
+            "type": "powershell",
+            "scripts":[
                 "./scripts/Install-Python.ps1"
             ]
         },
