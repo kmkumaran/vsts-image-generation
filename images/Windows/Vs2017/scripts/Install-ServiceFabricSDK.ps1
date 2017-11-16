@@ -5,5 +5,4 @@
 ##         must be install after Visual Studio
 ################################################################################
 
-choco install webpicmd -y
-WebpiCmd-x64.exe /Install /Products:MicrosoftAzure-ServiceFabric-CoreSDK /AcceptEula
+WebpiCmd.exe /Install /Products:MicrosoftAzure-ServiceFabric-CoreSDK /AcceptEula

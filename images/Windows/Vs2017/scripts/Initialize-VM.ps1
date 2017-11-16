@@ -83,3 +83,6 @@ Invoke-Expression ((new-object net.webclient).DownloadString('https://chocolatey
 
 # Turn off confirmation
 choco feature enable -n allowGlobalConfirmation
+
+# Install webpi
+choco install webpicmd -y
